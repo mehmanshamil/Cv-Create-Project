@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useRef, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -20,7 +20,11 @@ interface FormValues {
   training: string[];
 }
 
-const FormCV = () => {
+interface FormCVProps {
+  thema: boolean;
+}
+
+const FormCV: React.FC<FormCVProps> = ({ thema }) => {
   const pdfRef = useRef<HTMLDivElement>(null);
   const [photoURL, setPhotoURL] = useState<string | null>(null);
 
@@ -39,11 +43,13 @@ const FormCV = () => {
       training: [],
     },
     validationSchema: Yup.object({
-      name: Yup.string().required("Required"),
-      surname: Yup.string().required("Required"),
-      profession: Yup.string().required("Required"),
-      email: Yup.string().email("Invalid email").required("Required"),
-      phone: Yup.string().required("Required"),
+      name: Yup.string().required("Name is required"),
+      surname: Yup.string().required("Surname is required"),
+      profession: Yup.string().required("Profession is required"),
+      email: Yup.string().email("Invalid email").required("Email is required"),
+      phone: Yup.string().required("Phone is required"),
+      linkedin: Yup.string(),
+      github: Yup.string(),
     }),
     onSubmit: async () => {
       if (!pdfRef.current) return;
@@ -67,42 +73,177 @@ const FormCV = () => {
     }
   };
 
+  const inputClass = `w-full px-3 py-2 border rounded-lg ${
+    thema ? "bg-white text-black border-gray-300" : "bg-gray-800 text-white border-gray-600"
+  }`;
+
+  const fileInputClass = `w-[80%] p-1.5 m-auto rounded-[10px] cursor-pointer ${
+    thema ? "bg-black text-white" : "bg-white text-black"
+  }`;
+
+  const buttonClass = `w-full py-2 rounded-lg transition ${
+    thema ? "bg-blue-600 text-white hover:bg-blue-700" : "bg-blue-500 text-white hover:bg-blue-600"
+  }`;
+
+  const bgColor = thema ? "bg-gray-100 text-black" : "bg-gray-900 text-white";
+
   return (
-    <div className="max-w-3xl mx-auto mt-10 p-6 bg-gray-100 rounded-lg shadow-md">
+    <div className={`max-w-3xl mx-auto mt-10 p-6 rounded-lg shadow-md ${bgColor}`}>
       <h1 className="text-2xl font-bold mb-6 text-center">Create Your CV</h1>
       <form onSubmit={formik.handleSubmit} className="space-y-4">
         <div className="flex flex-col md:flex-row md:space-x-4">
           <div className="flex-1 space-y-2">
-            <input type="text" name="name" placeholder="Name" value={formik.values.name} onChange={formik.handleChange} className="w-full px-3 py-2 border rounded-lg" />
-            <input type="text" name="surname" placeholder="Surname" value={formik.values.surname} onChange={formik.handleChange} className="w-full px-3 py-2 border rounded-lg" />
-            <input type="text" name="profession" placeholder="Profession" value={formik.values.profession} onChange={formik.handleChange} className="w-full px-3 py-2 border rounded-lg" />
-            <input type="email" name="email" placeholder="Email" value={formik.values.email} onChange={formik.handleChange} className="w-full px-3 py-2 border rounded-lg" />
-            <input type="text" name="phone" placeholder="Phone" value={formik.values.phone} onChange={formik.handleChange} className="w-full px-3 py-2 border rounded-lg" />
-            <input type="text" name="linkedin" placeholder="LinkedIn" value={formik.values.linkedin} onChange={formik.handleChange} className="w-full px-3 py-2 border rounded-lg" />
-            <input type="text" name="github" placeholder="GitHub" value={formik.values.github} onChange={formik.handleChange} className="w-full px-3 py-2 border rounded-lg" />
+            <input
+              type="text"
+              name="name"
+              placeholder="Name"
+              value={formik.values.name}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              className={inputClass}
+            />
+            {formik.touched.name && formik.errors.name && (
+              <p className="text-red-500 text-sm">{formik.errors.name}</p>
+            )}
+
+            <input
+              type="text"
+              name="surname"
+              placeholder="Surname"
+              value={formik.values.surname}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              className={inputClass}
+            />
+            {formik.touched.surname && formik.errors.surname && (
+              <p className="text-red-500 text-sm">{formik.errors.surname}</p>
+            )}
+
+            <input
+              type="text"
+              name="profession"
+              placeholder="Profession"
+              value={formik.values.profession}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              className={inputClass}
+            />
+            {formik.touched.profession && formik.errors.profession && (
+              <p className="text-red-500 text-sm">{formik.errors.profession}</p>
+            )}
+
+            <input
+              type="email"
+              name="email"
+              placeholder="Email"
+              value={formik.values.email}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              className={inputClass}
+            />
+            {formik.touched.email && formik.errors.email && (
+              <p className="text-red-500 text-sm">{formik.errors.email}</p>
+            )}
+
+            <input
+              type="text"
+              name="phone"
+              placeholder="Phone"
+              value={formik.values.phone}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              className={inputClass}
+            />
+            {formik.touched.phone && formik.errors.phone && (
+              <p className="text-red-500 text-sm">{formik.errors.phone}</p>
+            )}
+
+            <input
+              type="text"
+              name="linkedin"
+              placeholder="LinkedIn"
+              value={formik.values.linkedin}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              className={inputClass}
+            />
+            {formik.touched.linkedin && formik.errors.linkedin && (
+              <p className="text-red-500 text-sm">{formik.errors.linkedin}</p>
+            )}
+
+            <input
+              type="text"
+              name="github"
+              placeholder="GitHub"
+              value={formik.values.github}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              className={inputClass}
+            />
+            {formik.touched.github && formik.errors.github && (
+              <p className="text-red-500 text-sm">{formik.errors.github}</p>
+            )}
           </div>
 
-          <div className="flex-none ">
-            <input type="file" accept="image/*" onChange={handlePhotoChange} className="w-[80%] p-1.5 m-auto rounded-[10px] bg-black text-white cursor-pointer" />
-            {photoURL && <img src={photoURL} alt="Preview" className="w-32 h-32 object-cover rounded-full mx-auto mt-2" />}
+          <div className="flex-none">
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handlePhotoChange}
+              className={fileInputClass}
+            />
+            {photoURL && (
+              <img
+                src={photoURL}
+                alt="Preview"
+                className="w-32 h-32 object-cover rounded-full mx-auto mt-2"
+              />
+            )}
           </div>
         </div>
 
-        {/* Sections */}
-        <SectionWithAdd title="Education" items={formik.values.education} onChange={(items) => formik.setFieldValue("education", items)} />
-        <SectionWithAdd title="Experience" items={formik.values.experience} onChange={(items) => formik.setFieldValue("experience", items)} />
-        <SectionWithAdd title="Training" items={formik.values.training} onChange={(items) => formik.setFieldValue("training", items)} />
+        <SectionWithAdd
+          title="Education"
+          items={formik.values.education}
+          onChange={(items) => formik.setFieldValue("education", items)}
+          thema={thema}
+        />
+        <SectionWithAdd
+          title="Experience"
+          items={formik.values.experience}
+          onChange={(items) => formik.setFieldValue("experience", items)}
+          thema={thema}
+        />
+        <SectionWithAdd
+          title="Training"
+          items={formik.values.training}
+          onChange={(items) => formik.setFieldValue("training", items)}
+          thema={thema}
+        />
 
-        <button type="submit" className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">Generate CV PDF</button>
+        <button type="submit" className={buttonClass}>
+          Generate CV PDF
+        </button>
       </form>
 
       {/* PDF Preview */}
-      <div ref={pdfRef} className="hidden p-6 bg-white text-black max-w-3xl mx-auto mt-6 rounded-lg shadow-md space-y-4">
+      <div
+        ref={pdfRef}
+        className={`hidden p-6 rounded-lg max-w-3xl mx-auto mt-6 shadow-md space-y-4 ${
+          thema ? "bg-white text-black" : "bg-gray-800 text-white"
+        }`}
+      >
         {photoURL && <img src={photoURL} alt="Photo" className="w-32 h-32 object-cover rounded-full mx-auto" />}
-        <h1 className="text-3xl font-bold text-center">{formik.values.name} {formik.values.surname}</h1>
+        <h1 className="text-3xl font-bold text-center">
+          {formik.values.name} {formik.values.surname}
+        </h1>
         <p className="text-center">{formik.values.profession}</p>
-        <p className="text-center">{formik.values.email} | {formik.values.phone}</p>
-        <p className="text-center">LinkedIn: {formik.values.linkedin} | GitHub: {formik.values.github}</p>
+        <p className="text-center">
+          {formik.values.email} | {formik.values.phone}
+        </p>
+        <p className="text-center">
+          LinkedIn: {formik.values.linkedin} | GitHub: {formik.values.github}
+        </p>
         <div>
           <h2 className="text-xl font-semibold border-b pb-1 mb-2">Education</h2>
           <ul className="list-disc list-inside">{formik.values.education.map((e, i) => <li key={i}>{e}</li>)}</ul>

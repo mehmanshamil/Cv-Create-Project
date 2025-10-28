@@ -12,7 +12,7 @@ const page = () => {
       <Header  thema={thema} setThema={setThema}/>
       <main>
         <section>
-          <FormCV/>
+          <FormCV thema={thema}/>
         </section>
       </main>
       <Footer  thema={thema} setThema={setThema}/>

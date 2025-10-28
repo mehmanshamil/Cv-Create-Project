@@ -226,7 +226,6 @@ const FormCV: React.FC<FormCVProps> = ({ thema }) => {
         </button>
       </form>
 
-      {/* PDF Preview */}
       <div
         ref={pdfRef}
         className={`hidden p-6 rounded-lg max-w-3xl mx-auto mt-6 shadow-md space-y-4 ${

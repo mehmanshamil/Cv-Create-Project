@@ -38,7 +38,16 @@ export default function Header({ window, thema, setThema }: Props) {
   };
 
   const drawer = (
-    <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
+    <Box
+      onClick={handleDrawerToggle}
+      sx={{
+        textAlign: "center",
+        backgroundColor: thema ? "#fff" : "#114892",
+        height: "100%",
+        color: thema ? "black" : "#fff",
+        transition: "background-color .5s ease, color .5s ease",
+      }}
+    >
       <Typography variant="h6" sx={{ my: 2 }}>
         <Image
           src={"/logo.jpg"}
@@ -48,7 +57,7 @@ export default function Header({ window, thema, setThema }: Props) {
           className="rounded-[10px] object-cover w-[50px] h-[50px] m-auto"
         />
       </Typography>
-      <Divider />
+      <Divider sx={{ borderColor: thema ? "#ccc" : "#1e60b1" }} />
       <List>
         {navItems.map((item) => (
           <ListItem key={item} disablePadding>
@@ -57,17 +66,35 @@ export default function Header({ window, thema, setThema }: Props) {
             </ListItemButton>
           </ListItem>
         ))}
+        <BedtimeIcon
+          onClick={changeThema}
+          sx={{
+            cursor: "pointer",
+            transition: "color .5s ease",
+            color: thema ? "black" : "#fff",
+            margin: "1rem",
+            "&:hover": { color: thema ? "#114892" : "#fff" },
+          }}
+        />
       </List>
     </Box>
   );
 
-  const container = window !== undefined ? () => window().document.body : undefined;
+  const container =
+    window !== undefined ? () => window().document.body : undefined;
 
   return (
     <header>
       <Box sx={{ display: "flex" }}>
         <CssBaseline />
-        <AppBar component="nav" sx={{ padding: "10px", backgroundColor: thema ? "#fff" : "#114892" }}>
+        <AppBar
+          component="nav"
+          sx={{
+            padding: "10px",
+            backgroundColor: thema ? "#fff" : "#114892",
+            transition: "background-color .5s ease",
+          }}
+        >
           <Toolbar>
             <IconButton
               color="inherit"
@@ -76,9 +103,13 @@ export default function Header({ window, thema, setThema }: Props) {
               onClick={handleDrawerToggle}
               sx={{ mr: 2, display: { sm: "none" } }}
             >
-              <MenuIcon />
+              <MenuIcon sx={{ color: thema ? "black" : "#fff" }} />
             </IconButton>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}>
+            <Typography
+              variant="h6"
+              component="div"
+              sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
+            >
               <Image
                 src={"/logo.jpg"}
                 width={100}
@@ -95,7 +126,7 @@ export default function Header({ window, thema, setThema }: Props) {
                     color: thema ? "black" : "#fff",
                     fontWeight: "bold",
                     transition: ".5s",
-                    ":hover": { color: "black" },
+                    ":hover": { color: thema ? "#114892" : "#ddd" },
                   }}
                 >
                   {item}
@@ -108,7 +139,7 @@ export default function Header({ window, thema, setThema }: Props) {
                   transition: "color .5s ease",
                   color: thema ? "black" : "#fff",
                   margin: "0 1rem",
-                  "&:hover": { color: "black" },
+                  "&:hover": { color: thema ? "#114892" : "#ddd" },
                 }}
               />
             </Box>
@@ -123,7 +154,13 @@ export default function Header({ window, thema, setThema }: Props) {
             ModalProps={{ keepMounted: true }}
             sx={{
               display: { xs: "block", sm: "none" },
-              "& .MuiDrawer-paper": { boxSizing: "border-box", width: drawerWidth },
+              "& .MuiDrawer-paper": {
+                boxSizing: "border-box",
+                width: drawerWidth,
+                backgroundColor: thema ? "#fff" : "#114892",
+                color: thema ? "black" : "#fff",
+                transition: "background-color .5s ease, color .5s ease",
+              },
             }}
           >
             {drawer}

@@ -89,7 +89,7 @@ const FormCV: React.FC<FormCVProps> = ({ thema }) => {
 
   return (
     <div className={`max-w-3xl mx-auto mt-10 p-6 rounded-lg shadow-md ${bgColor}`}>
-      <h1 className="text-2xl font-bold mb-6 text-center">Create Your CV</h1>
+      <h1 className="text-2xl font-bold mb-6 text-center">Create Your CV !</h1>
       <form onSubmit={formik.handleSubmit} className="space-y-4">
         <div className="flex flex-col md:flex-row md:space-x-4">
           <div className="flex-1 space-y-2">
